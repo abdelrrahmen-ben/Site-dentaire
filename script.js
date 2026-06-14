@@ -70,6 +70,16 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 const form = document.getElementById("contactForm");
 if (form) {
   const confirmMsg = document.getElementById("formConfirm");
+  const errorMsg = document.getElementById("formError");
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  // EmailJS
+  const EMAILJS_SERVICE_ID = "service_8o599up";
+  const EMAILJS_TEMPLATE_ID = "template_c7864ke";
+  const EMAILJS_PUBLIC_KEY = "VPlRYnzPccI9LaAj7";
+  if (window.emailjs) {
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  }
 
   const validators = {
     prenom: (v) => (v.trim() ? "" : "Merci d'indiquer votre prénom."),
@@ -110,11 +120,35 @@ if (form) {
       if (message) ok = false;
     });
     if (!ok) return;
-    confirmMsg.hidden = false;
-    form.reset();
-    Object.keys(validators).forEach((name) => showError(name, ""));
-    setTimeout(() => {
-      confirmMsg.hidden = true;
-    }, 6000);
+
+    confirmMsg.hidden = true;
+    errorMsg.hidden = true;
+
+    if (!window.emailjs) {
+      errorMsg.hidden = false;
+      return;
+    }
+
+    const btnLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Envoi en cours…";
+
+    emailjs
+      .sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+      .then(() => {
+        confirmMsg.hidden = false;
+        form.reset();
+        Object.keys(validators).forEach((name) => showError(name, ""));
+        setTimeout(() => {
+          confirmMsg.hidden = true;
+        }, 6000);
+      })
+      .catch(() => {
+        errorMsg.hidden = false;
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = btnLabel;
+      });
   });
 }
