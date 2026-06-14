@@ -565,7 +565,7 @@ textarea:focus-visible,
 }
 .nav-mobile a {
   display: block;
-  padding: 14px 0;
+  padding: 14px 0 14px 12px;
   color: var(--text);
   font-weight: 500;
 }
