@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(timeout 15 bash -c 'until curl -sf http://localhost:8765 >/dev/null; do sleep 1; done')",
+      "Bash(curl -sf http://localhost:8765)",
+      "Bash(curl -v http://127.0.0.1:8765)"
+    ]
+  }
+}
