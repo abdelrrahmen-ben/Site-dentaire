@@ -1483,6 +1483,7 @@ textarea:focus-visible,
    ========================================================= */
 .footer {
   position: relative;
+  padding-top: 48px;
   background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
   color: #cfd8e8;
 }
@@ -1503,7 +1504,7 @@ textarea:focus-visible,
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: start;
   gap: 48px;
-  padding-top: 64px;
+  padding-top: 32px;
   padding-bottom: 48px;
 }
 /* Chaque case : bloc aligné au même bord (gauche de la case), texte à gauche
